@@ -24,6 +24,17 @@ def main(args):
     train_model(args.reg_rate, X_train, X_test, y_train, y_test)
 
 
+def split_data(df):
+    X = df.drop('Y', axis=1).values
+    y = df['Y'].values
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=0)
+    data = {"train": {"X": X_train, "y": y_train},
+            "test": {"X": X_test, "y": y_test}}
+    return data
+
+
 def get_csvs_df(path):
     if not os.path.exists(path):
         raise RuntimeError(f"Cannot use non-existent path provided: {path}")
